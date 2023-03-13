@@ -3,14 +3,14 @@
     <div>
       <h3>Выбранные вещи:</h3>
       <ul>
-        <li v-for="id in selectedItems" :key="id">{{ getUserItem(id).name }}</li>
+        <li v-for="item in selectedItems" :key="item">{{ item.name }}</li>
       </ul>
     </div>
     <div>
       <h3>Выберите от 1 до 6 вещей:</h3>
       <div v-for="item in userItems" :key="item.id">
         <label>
-          <input type="checkbox" v-model="selectedItems" :disabled="isCheckedDisabled" :value="item.id" @change="handleSelection">{{ item.name }}
+          <input type="checkbox" :value="item" v-model="checkedItems" :disabled="disableCheckbox(item)">{{ item.name }}
         </label>
       </div>
     </div>
@@ -55,26 +55,18 @@ export default {
             "name": "T-shirt 4"
         }
       ],
-      selectedItems: [],
+      checkedItems: [],
     };
   },
   methods: {
-    getUserItem(id) {
-      return this.userItems.find((item) => item.id === id);
-    },
-    handleSelection() {
-      if (this.selectedItems.length > 6) {
-        this.selectedItems.splice(-1, 1);
-      }
-    },
+    disableCheckbox(item) {
+      return !this.checkedItems.includes(item) && this.selectedItems.length === 6;
+    }
   },
   computed: {
-    isMaxSelected() {
-      return this.selectedItems.length >= 6;
-    },
-    isCheckedDisabled() {
-      return this.selectedItems.length >= 6;
-    },
+    selectedItems() {
+      return this.checkedItems.slice(0, 6);
+    }
   },
 };
 </script>

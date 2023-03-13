@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <SelectedItems/>
     <ChooseOne />
   </div>
@@ -16,3 +16,10 @@ export default {
   }     
 };
 </script>
+
+<style scoped>
+  .main {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
